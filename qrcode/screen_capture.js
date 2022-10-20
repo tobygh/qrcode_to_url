@@ -16,6 +16,7 @@ async function startCapture() {
     videoElem.setAttribute("height", "1080");
     videoElem.setAttribute("id", "video");
     videoElem.style.display="none";
+    videoElem.style.position="fixed";
     // loadeddata
 
     function showRes(url){
@@ -33,6 +34,7 @@ async function startCapture() {
         var canvas = document.createElement('canvas');
         canvas.width = this.videoWidth;
         canvas.height = this.videoHeight;
+        // canvas.style.display="none";
         var ctx = canvas.getContext("2d");
         ctx.drawImage(this, 0, 0);
         
@@ -52,38 +54,16 @@ async function startCapture() {
         console.log(qres)
         showRes(qres);
 
-        // js qrcode solution
-		// // convert to gray
-        // const imgData = ctx.getImageData(0,0,this.videoWidth,this.videoHeight);
-		// const data = imgData.data;
-		// for (var i = 0; i < data.length; i += 4) {
-		// 	var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-		// 	data[i]     = avg; // red
-		// 	data[i + 1] = avg; // green
-		// 	data[i + 2] = avg; // blue
-		// }
-		// ctx.putImageData(imgData, 0, 0);
-        // // console.log(imgData.data);
-        // // var data = imgData.data;
-
-
-		// var url = canvas.toDataURL();
+		
 		// // debug img result
-		// // var imageResult = document.createElement('img');
-        // // imageResult.setAttribute("src",url);
-        // // document.body.appendChild(imageResult);
-        // qrcode.callback = function(qres){
-        //     console.log(qres);
-        //  showRes(qres);
+        // var url = canvas.toDataURL();
+		// var imageResult = document.createElement('img');
+        // imageResult.setAttribute("src",url);
+        // document.body.appendChild(imageResult);
 
-        // }
-        // // qrcode.decode_url(url);
-		// qrcode.decode(url);
-        
-        // qrResult = jsQR(imgData.data,this.videoWidth,this.videoHeight);
-        // console.log(qrResult);
+
         stopCapture();
-        document.body.removeChild(this);
+        document.body.removeChild(videoElem);
       },false);
 
     document.body.appendChild(videoElem);

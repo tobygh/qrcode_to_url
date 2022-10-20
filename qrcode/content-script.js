@@ -1,10 +1,10 @@
 // 监听 background 传来的数据 可对页面dom操作
 chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
-	// console.log(data)
     
-
+    // 启动简易图片浏览器
 	if(data.mediaType=="image"){
 		if(data.srcUrl!=""){
+            
             function getWH(){
                 let WW = 0;
                 let HH = 0;
@@ -30,9 +30,9 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
 			
 			// console.log(imageView)
 			document.body.appendChild(imageView)
-			imageView.outerHTML = '<div id="imgViewDiv" style="position: fixed;left: 0;right: 0;top: 0;bottom: 0;z-index: 2000;background: rgba(0, 0, 0, 1);overflow:scroll;"><div id="imgViewZoomIn" style="overflow: hidden;display: block;position: fixed;right: 140px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >放大</div><div id="imgViewZoomOut" style="overflow: hidden;display: block;position: fixed;right: 80px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >缩小</div><div id="imgViewClose" style="overflow: hidden;display: block;position: fixed;right: 20px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >关闭</div><img  src="'+data.srcUrl+'" id="imgViewTarget"></img></div>'
+			imageView.outerHTML = '<div id="imgViewDiv" style="position: fixed;left: 0;right: 0;top: 0;bottom: 0;z-index: 2000;background: rgba(0, 0, 0, 1);overflow:scroll;"><div id="imgButtions"><div id="imgCapture" style="overflow: hidden;display: block;position: fixed;right: 200px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >识别</div><div id="imgViewZoomIn" style="overflow: hidden;display: block;position: fixed;right: 140px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >放大</div><div id="imgViewZoomOut" style="overflow: hidden;display: block;position: fixed;right: 80px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >缩小</div><div id="imgViewClose" style="overflow: hidden;display: block;position: fixed;right: 20px;top: 20px;cursor: pointer;background-color:#fff;border-radius: 6px;padding: 0px 5px;border: 2px solid;user-select: none;" >关闭</div></div><img  src="'+data.srcUrl+'" id="imgViewTarget"></img></div>'
 			// console.log(imageView)
-        
+            
             function closeImageView(){
                 imgViewDiv.parentNode.removeChild(imgViewDiv);
             }
@@ -108,12 +108,28 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
             imgViewTarget.addEventListener("load", imageInit);
             
 
+            function launchJS(){
+                document.getElementById("imgButtions").style.display="none";
+                try{
+                    chrome.runtime.sendMessage({farewell: "startCapture"}, function(response) {
+                        console.log(response);
+                        document.getElementById("imgButtions").style.display="block";
+                    });
+                }
+                catch{
+                    document.getElementById("imgButtions").style.display="block";
+                }
+                
+            }
+            document.getElementById("imgCapture").addEventListener("click", launchJS);
             
 		}
+
+        
 	}
-	// if (data.menuItemId) {
-	// 	switch (data.menuItemId) {
-		// }
-		// window.open("https://www.baidu.com/");
-	// }
+    // else {
+    //     sendResponse({farewell: "noCapture"});    
+    // }
+    sendResponse();
+    
 });

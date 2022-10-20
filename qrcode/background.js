@@ -34,9 +34,31 @@ chrome.runtime.onInstalled.addListener(() => {
         contexts: ['all'],
     });
 });
-// 点击弹出菜单
+
+// 点击右键菜单 识别
 chrome.contextMenus.onClicked.addListener(function(item, tab) {
-	chrome.tabs.sendMessage(tab.id, item, function() {
-		console.log(arguments, chrome.runtime.lastError);
-	});
+	chrome.tabs.sendMessage(tab.id, item, ()=>{	});
 });
+
+// 发起识别，调用库函数
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        console.log(request);
+        console.log(sender);
+        if(request!=undefined &&request.farewell=="startCapture"){
+            chrome.scripting.executeScript(
+                {
+                target: {tabId: sender.tab.id},
+                files: ['zxing.js','screen_capture.js'],
+                },
+                (results) => { 
+                    console.log("done use library")
+                    console.log(results)
+                    sendResponse();
+                }
+            );
+        }
+        
+        return true;
+    }
+  );
