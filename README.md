@@ -13,11 +13,11 @@
 ![](./qrcode_example_imgs/0.png)
 2. 然后会启动一个建议的图像查看器，如果是很长的图像中包含二维码，可以通过放大和滚动调整二维码的的位置，使其位于屏幕中央。
 
-3. 点击扩展工具栏中，本扩展的图标，将会发起识别流程
-    1. 提示共享屏幕，点击当前屏幕，点击允许
+3. 点击识别按钮，将会自动截图并识别
+    1. 在弹出来的对话框中，点击二维码的缩略图，再点击共享
 ![](./qrcode_example_imgs/3.png)
     2. 自动截图并识别二维码，将链接显示在弹窗中
 ![](./qrcode_example_imgs/4.png)
 
 ## Chrome商店链接
-[待审核](javascript:void())
+[qrcode_to_url](https://chrome.google.com/webstore/detail/qrcodetourl/onpiknidepgceggdijncjnkdlkappnmm?hl=zh)
